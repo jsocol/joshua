@@ -1,6 +1,11 @@
 """Joshua Node Server."""
 
+import json
+
 from tornado import web
+
+
+nodes = set()
 
 
 class HelloHandler(web.RequestHandler):
@@ -11,7 +16,15 @@ class HelloHandler(web.RequestHandler):
         introduce itself.
 
         """
-        raise NotImplementedError
+        data = json.loads(self.request.body)
+        retval = {'nodes': [n for n in nodes]}
+        if data['node'] in nodes:
+            self.set_status(304)
+        else:
+            nodes.add(data['node'])
+            self.set_status(200)
+        self.write(retval)
+        self.finish()
 
 
 class ObjectHandler(web.RequestHandler):
