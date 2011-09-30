@@ -42,6 +42,31 @@ The client-to-server protocol MUST cover the following actions:
 Communicating with *any* node MUST be sufficient.
 
 
+Protocol Methods
+----------------
+
+
+``POST``
+~~~~~~~~
+
+Push new data to the cluster. Put the data of the file in the post body and the
+file name in the path. The body of the return will be a JSON blob with the
+status and the remote file name. For example::
+
+    $ curl -X POST --data-binary @test.png \
+      http://localhost:3000/object/test.png
+    {"status": "OK", "name": "5a2b1ad3-1241-4cd6-adaf-8e02ead55924.png"}
+
+
+``DELETE``
+~~~~~~~~~~
+
+Delete a file from the cluster. For example::
+
+    $ curl -X DELETE http://localhost:3000/object/remote-file-name.png
+    {"status": "OK"}
+
+
 Public-to-Server
 ================
 
