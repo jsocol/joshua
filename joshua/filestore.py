@@ -4,8 +4,10 @@ import os
 import sys
 import uuid
 
+from conf import settings
 
-DIRECTORY = '/tmp/joshua'
+
+DIRECTORY = settings.FILE_STORE_LOCATION
 MODE = os.R_OK | os.W_OK
 
 
