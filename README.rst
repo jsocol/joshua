@@ -35,6 +35,9 @@ Goals
   local database or data store outside the server process. (A database-backed
   datastore is allowed.)
 
+* **Protocol-based.** It SHOULD be possible to implement the protocol in
+  another language and join the cluster.
+
 
 Non-goals
 ---------
