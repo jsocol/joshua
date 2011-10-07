@@ -4,8 +4,7 @@ import json
 
 from tornado import web
 
-
-nodes = set()
+from nodes import Node, known_nodes
 
 
 class HelloHandler(web.RequestHandler):
@@ -16,14 +15,16 @@ class HelloHandler(web.RequestHandler):
         introduce itself.
 
         """
+        print 'Got handshake'
         data = json.loads(self.request.body)
-        retval = {'nodes': [n for n in nodes]}
-        if data['node'] in nodes:
+        node = Node(addr=data['addr'], port=data['port'])
+        if node in known_nodes:
             self.set_status(304)
         else:
-            nodes.add(data['node'])
+            known_nodes.add(node)
             self.set_status(200)
-        self.write(retval)
+        nodes = [dict(addr=n.addr, port=n.port) for n in known_nodes]
+        self.write(json.dumps({'nodes': nodes}))
         self.finish()
 
 
