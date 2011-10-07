@@ -3,6 +3,7 @@ import optparse
 from tornado import ioloop
 
 from client import client_application
+from conf import settings
 from node import p2p_application
 from public import public_application
 
@@ -21,9 +22,10 @@ if __name__ == '__main__':
 
     (opts, _) = parser.parse_args()
 
+
     # TODO: Wrap this. Or maybe make joshua.server contain this part and move
     # other startup into a different module.
-    p2p_application.listen(opts.n2n)
-    public_application.listen(opts.public)
-    client_application.listen(opts.client)
+    p2p_application.listen(settings.P2P_PORT)
+    public_application.listen(settings.PUBLIC_PORT)
+    client_application.listen(settings.CLIENT_PORT)
     ioloop.IOLoop.instance().start()
